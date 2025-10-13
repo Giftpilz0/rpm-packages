@@ -1,5 +1,5 @@
 Name:           hyprpaper
-Version:        0.7.5
+Version:        0.7.6
 Release:        %autorelease
 Summary:        Blazing fast wayland wallpaper utility with IPC controls
 # LICENSE: BSD-3-Clause
