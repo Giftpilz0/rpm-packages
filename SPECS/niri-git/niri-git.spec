@@ -1,6 +1,6 @@
 %global __cargo_is_lib() 0
 
-%global commit0 32d73235703bd98d7f2b3f78b4b189786291b656
+%global commit0 2776005c5fc4fbb85636672213b8b84a319dfb01
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global bumpver 0
 
