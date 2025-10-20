@@ -1,0 +1,216 @@
+---
+name: Selective COPR Builds
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      eww-git: ${{ steps.changes.outputs.eww-git }}
+      hyprgraphics: ${{ steps.changes.outputs.hyprgraphics }}
+      hypridle: ${{ steps.changes.outputs.hypridle }}
+      hyprland-protocols: ${{ steps.changes.outputs.hyprland-protocols }}
+      hyprland-qt-support: ${{ steps.changes.outputs.hyprland-qt-support }}
+      hyprlang: ${{ steps.changes.outputs.hyprlang }}
+      hyprlock: ${{ steps.changes.outputs.hyprlock }}
+      hyprpaper: ${{ steps.changes.outputs.hyprpaper }}
+      hyprpolkitagent: ${{ steps.changes.outputs.hyprpolkitagent }}
+      hyprutils: ${{ steps.changes.outputs.hyprutils }}
+      hyprwayland-scanner: ${{ steps.changes.outputs.hyprwayland-scanner }}
+      matugen-git: ${{ steps.changes.outputs.matugen-git }}
+      niri-git: ${{ steps.changes.outputs.niri-git }}
+      waypipe-git: ${{ steps.changes.outputs.waypipe-git }}
+      yolk-git: ${{ steps.changes.outputs.yolk-git }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            eww-git:
+              - 'SPECS/eww-git/**'
+            hyprgraphics:
+              - 'SPECS/hyprgraphics/**'
+            hypridle:
+              - 'SPECS/hypridle/**'
+            hyprland-protocols:
+              - 'SPECS/hyprland-protocols/**'
+            hyprland-qt-support:
+              - 'SPECS/hyprland-qt-support/**'
+            hyprlang:
+              - 'SPECS/hyprlang/**'
+            hyprlock:
+              - 'SPECS/hyprlock/**'
+            hyprpaper:
+              - 'SPECS/hyprpaper/**'
+            hyprpolkitagent:
+              - 'SPECS/hyprpolkitagent/**'
+            hyprutils:
+              - 'SPECS/hyprutils/**'
+            hyprwayland-scanner:
+              - 'SPECS/hyprwayland-scanner/**'
+            matugen-git:
+              - 'SPECS/matugen-git/**'
+            niri-git:
+              - 'SPECS/niri-git/**'
+            waypipe-git:
+              - 'SPECS/waypipe-git/**'
+            yolk-git:
+              - 'SPECS/yolk-git/**'
+
+  build-eww-git:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.eww-git == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger eww-git COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/eww-git/"
+
+  build-hyprgraphics:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprgraphics == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprgraphics COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprgraphics/"
+
+  build-hypridle:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hypridle == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hypridle COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hypridle/"
+
+  build-hyprland-protocols:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprland-protocols == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprland-protocols COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprland-protocols/"
+
+  build-hyprland-qt-support:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprland-qt-support == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprland-qt-support COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprland-qt-support/"
+
+  build-hyprlang:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprlang == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprlang COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprlang/"
+
+  build-hyprlock:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprlock == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprlock COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprlock/"
+
+  build-hyprpaper:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprpaper == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprpaper COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprpaper/"
+
+  build-hyprpolkitagent:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprpolkitagent == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprpolkitagent COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprpolkitagent/"
+
+  build-hyprutils:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprutils == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprutils COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprutils/"
+
+  build-hyprwayland-scanner:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.hyprwayland-scanner == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger hyprwayland-scanner COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/hyprwayland-scanner/"
+
+  build-matugen-git:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.matugen-git == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger matugen-git COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/matugen-git/"
+
+  build-niri-git:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.niri-git == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger niri-git COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/niri-git/"
+
+  build-waypipe-git:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.waypipe-git == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger waypipe-git COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/waypipe-git/"
+
+  build-yolk-git:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.yolk-git == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger yolk-git COPR build
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/yolk-git/"
