@@ -6,7 +6,7 @@
 
 Name:           niri-git
 Version:        25.08
-Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
 
 

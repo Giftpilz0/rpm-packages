@@ -4,7 +4,7 @@
 
 Name:           eww-git
 Version:        0.6.0
-Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        ElKowars wacky widgets
 
 License:        MIT

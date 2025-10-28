@@ -4,7 +4,7 @@
 
 Name:           yolk-git
 Version:        0.3.4
-Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Yolk
 
 License:        MIT

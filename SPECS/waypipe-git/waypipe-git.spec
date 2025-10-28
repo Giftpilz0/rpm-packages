@@ -4,7 +4,7 @@
 
 Name:           waypipe-git
 Version:        0.10.5
-Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        waypipe
 
 License:        MIT

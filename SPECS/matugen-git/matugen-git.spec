@@ -4,7 +4,7 @@
 
 Name:           matugen-git
 Version:        3.0.0
-Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        matugen
 
 License:        GPL-2.0-only
