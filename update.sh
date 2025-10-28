@@ -54,7 +54,7 @@ for entry in "${packages[@]}"; do
     echo "[✘] Could not fetch latest tag"
   fi
 
-  # For git packages: update commit0
+  # For git packages: update commit0 and commitdate
   if [ "$type" = "git" ]; then
     # Get the default branch dynamically
     if json_repo="$(curl -fsSL "$api" 2>/dev/null)" && [ -n "$json_repo" ]; then
@@ -73,17 +73,24 @@ for entry in "${packages[@]}"; do
     echo "[ℹ] Using default branch: $def_branch"
 
     case "$platform" in
-      github) commits_url="$api/commits?sha=$def_branch&per_page=1"; commit_field='.[0].sha' ;;
-      gitlab) commits_url="$api/repository/commits?ref_name=$def_branch&per_page=1"; commit_field='.[0].id' ;;
+      github) commits_url="$api/commits?sha=$def_branch&per_page=1"; commit_field='.[0].sha'; date_field='.[0].commit.author.date' ;;
+      gitlab) commits_url="$api/repository/commits?ref_name=$def_branch&per_page=1"; commit_field='.[0].id'; date_field='.[0].committed_date' ;;
     esac
 
     if json_commits="$(curl -fsSL "$commits_url" 2>/dev/null)" && [ -n "$json_commits" ]; then
       newCommit="$(echo "$json_commits" | jq -r "$commit_field // empty")"
+      newCommitDate="$(echo "$json_commits" | jq -r "$date_field // empty" | cut -d'T' -f1 | tr -d '-')"
 
       if [ -n "$newCommit" ]; then
-        sed -Ei 's@^([[:space:]]*%[[:space:]]*(global|define)[[:space:]]+commit0[[:space:]]+)[0-9a-fA-F]{7,40}([[:space:]]*)(#.*)?$@\1'"$newCommit"'\3\4@' "$spec"
+        sed -Ei 's@^(%global|%define) commit0 .*@\1 commit0 '"$newCommit"'@' "$spec"
         echo "[✔] Set commit0 to $newCommit on branch $def_branch"
       fi
+
+      if [ -n "$newCommitDate" ]; then
+        sed -Ei 's@^(%global|%define) commitdate .*@\1 commitdate '"$newCommitDate"'@' "$spec"
+        echo "[✔] Set commitdate to $newCommitDate"
+      fi
+
     else
       echo "[✘] Could not fetch latest commit from branch $def_branch"
     fi

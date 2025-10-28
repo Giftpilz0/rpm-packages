@@ -1,9 +1,10 @@
 %global commit0 4a73edd962cdff0e88191d868ac6b6b96ba0ae54
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20250429
 
 Name:           yolk-git
 Version:        0.3.4
-Release:        %autorelease -s git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
 Summary:        Yolk
 
 License:        MIT

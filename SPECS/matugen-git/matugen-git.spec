@@ -1,9 +1,10 @@
-%global commit0 e85a6c9ac4efe2362afb6358f8d2f05556a1d1f1
+%global commit0 c3c33ce96c39997e88d3f3bb4080bbc3ca93a8e8
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20251026
 
 Name:           matugen-git
-Version:        2.4.1
-Release:        %autorelease -s git%{shortcommit0}
+Version:        3.0.0
+Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
 Summary:        matugen
 
 License:        GPL-2.0-only

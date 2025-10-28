@@ -1,11 +1,12 @@
 %global __cargo_is_lib() 0
 
-%global commit0 b3245b81a6ed8edfaf5388a74d2e0a23c24941e5
+%global commit0 e6f3c538da0c646bda43fcde7ef7dc3b771e0c8b
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20251026
 
 Name:           niri-git
 Version:        25.08
-Release:        %autorelease -s git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
 
 

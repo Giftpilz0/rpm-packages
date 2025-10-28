@@ -1,9 +1,10 @@
 %global commit0 fddb4a09b107237819e661151e007b99b5cab36d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20250630
 
 Name:           eww-git
 Version:        0.6.0
-Release:        %autorelease -s git%{shortcommit0}
+Release:        %autorelease -s %{commitdate}-git%{shortcommit0}
 Summary:        ElKowars wacky widgets
 
 License:        MIT
