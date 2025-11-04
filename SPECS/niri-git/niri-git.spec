@@ -1,8 +1,8 @@
 %global __cargo_is_lib() 0
 
-%global commit0 6e8fd153395036c2daa7c214695ed9baf2409a2e
+%global commit0 a2ca2b3c866bc781b12c334a9f949b3db6d7c943
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20251029
+%global commitdate 20251103
 
 Name:           niri-git
 Version:        25.08
