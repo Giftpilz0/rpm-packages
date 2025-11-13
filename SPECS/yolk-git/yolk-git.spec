@@ -1,9 +1,9 @@
-%global commit0 4a73edd962cdff0e88191d868ac6b6b96ba0ae54
+%global commit0 b4046140b4253934568bf0289673ec5efeb2a5c9
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20250429
+%global commitdate 20251112
 
 Name:           yolk-git
-Version:        0.3.4
+Version:        0.3.6
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Yolk
 
