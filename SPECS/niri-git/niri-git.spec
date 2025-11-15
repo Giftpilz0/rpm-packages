@@ -1,14 +1,13 @@
 %global __cargo_is_lib() 0
 
-%global commit0 5b77107161c504376b962107913bf74b575703e7
+%global commit0 a52df533c4694b5ed0a04140af60fd26146df911
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20251111
+%global commitdate 20251113
 
 Name:           niri-git
 Version:        25.08
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
-
 
 SourceLicense:        GPL-3.0-or-later
 License:              ((MIT OR Apache-2.0) AND BSD-3-Clause) AND ((MIT OR Apache-2.0) AND Unicode-3.0) AND (0BSD OR MIT OR Apache-2.0) AND (Apache-2.0) AND (Apache-2.0 AND MIT) AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 OR MIT OR Unlicense) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (BSD-2-Clause) AND (BSD-2-Clause OR Apache-2.0 OR MIT) AND (BSD-3-Clause OR MIT OR Apache-2.0) AND (GPL-3.0-or-later) AND (ISC) AND (MIT) AND (MIT OR Apache-2.0) AND (MIT OR Apache-2.0 OR LGPL-2.1-or-later) AND (MIT OR Apache-2.0 OR Zlib) AND (MIT OR Zlib OR Apache-2.0) AND (MPL-2.0) AND (Unicode-3.0) AND (Unlicense OR MIT) AND (Zlib) AND (Zlib OR Apache-2.0 OR MIT)
@@ -79,6 +78,13 @@ install -Dm644 -t %{buildroot}%{_datadir}/xdg-desktop-portal ./resources/niri-po
 install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri.service
 install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri-shutdown.target
 
+install -dm755 %{buildroot}%{bash_completion_dir}
+%{buildroot}%{_bindir}/niri completions bash > %{buildroot}%{bash_completions_dir}/niri
+install -dm755 %{buildroot}%{fish_completions_dir}
+%{buildroot}%{_bindir}/niri completions fish > %{buildroot}%{fish_completions_dir}/niri.fish
+install -dm755 %{buildroot}%{zsh_completions_dir}
+%{buildroot}%{_bindir}/niri completions zsh  > %{buildroot}%{zsh_completions_dir}/_niri
+
 %files
 %license LICENSE
 %license LICENSE.dependencies
@@ -93,6 +99,9 @@ install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri-shutdown.target
 %{_datadir}/xdg-desktop-portal/niri-portals.conf
 %{_userunitdir}/niri.service
 %{_userunitdir}/niri-shutdown.target
+%{bash_completions_dir}/niri
+%{fish_completions_dir}/niri.fish
+%{zsh_completions_dir}/_niri
 
 %changelog
 %autochangelog
