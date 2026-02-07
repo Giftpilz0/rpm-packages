@@ -1,9 +1,10 @@
-%global commit0 3b29590e54a8e2afb1a7ed78af5ea79b4fb22cc9
+%global commit0 c4aaa2f7a9460eaa007cc0be708f3d8d9b267166
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20260114
 
 Name:           waypipe-git
-Version:        0.10.5
-Release:        %autorelease -s git%{shortcommit0}
+Version:        0.11.0
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        waypipe
 
 License:        MIT
