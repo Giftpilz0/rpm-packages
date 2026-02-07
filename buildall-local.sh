@@ -2,21 +2,13 @@
 
 # Package list in build order
 packages=(
-    "hyprutils"
-    "hyprlang"
-    "hyprgraphics"
-    "hyprland-protocols"
-    "hyprwayland-scanner"
-    "hyprland-qt-support"
-    "hypridle"
-    "hyprlock"
-    "hyprpaper"
-    "hyprpolkitagent"
+    "breakpad"
     "eww-git"
     "matugen-git"
-    "yolk-git"
-    "waypipe-git"
     "niri-git"
+    "quickshell-git"
+    "waypipe-git"
+    "yolk-git"
 )
 
 # Required host tools

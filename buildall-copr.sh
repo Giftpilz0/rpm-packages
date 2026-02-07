@@ -3,10 +3,10 @@
 BASE="https://copr.fedorainfracloud.org/webhooks/custom/$COPR_WEBHOOK_ID/$COPR_WEBHOOK_UUID"
 
 declare -A BUILD_LEVELS=(
-    [1]="hyprutils hyprland-protocols hyprwayland-scanner"
-    [2]="hyprlang hyprgraphics"
-    [3]="hyprland-qt-support hyprlock hyprpaper hypridle"
-    [4]="yolk-git waypipe-git hyprpolkitagent"
+    [1]="breakpad"
+    [2]="eww-git matugen-git niri-git quickshell-git waypipe-git yolk-git"
+    [3]=""
+    [4]=""
 )
 
 WAIT_TIME=240
