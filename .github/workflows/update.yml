@@ -78,6 +78,27 @@ jobs:
 
           git push
 
+  full-rebuild:
+    if: github.event.inputs.full_rebuild == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger all COPR builds
+        run: |
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/breakpad/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/eww-git/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/matugen-git/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/niri-git/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/quickshell-git/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/waypipe-git/"
+          curl -X POST \
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/yolk-git/"
+
   detect-changes:
     needs: update-packages
     runs-on: ubuntu-latest
@@ -130,9 +151,7 @@ jobs:
 
   build-breakpad:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.breakpad == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.breakpad == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger breakpad COPR build
@@ -142,9 +161,7 @@ jobs:
 
   build-eww-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.eww-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.eww-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger eww-git COPR build
@@ -154,9 +171,7 @@ jobs:
 
   build-matugen-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.matugen-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.matugen-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger matugen-git COPR build
@@ -166,9 +181,7 @@ jobs:
 
   build-niri-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.niri-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.niri-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger niri-git COPR build
@@ -178,9 +191,7 @@ jobs:
 
   build-quickshell-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.quickshell-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.quickshell-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger quickshell-git COPR build
@@ -190,9 +201,7 @@ jobs:
 
   build-waypipe-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.waypipe-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.waypipe-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger waypipe-git COPR build
@@ -202,9 +211,7 @@ jobs:
 
   build-yolk-git:
     needs: detect-changes
-    if: >-
-      (needs.detect-changes.outputs.yolk-git == 'true') ||
-      (github.event.inputs.full_rebuild == 'true')
+    if: needs.detect-changes.outputs.yolk-git == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger yolk-git COPR build
