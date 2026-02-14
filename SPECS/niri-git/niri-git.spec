@@ -1,17 +1,17 @@
 %global __cargo_is_lib() 0
 
-%global commit0 b3245b81a6ed8edfaf5388a74d2e0a23c24941e5
+%global commit0 549148d27779d024255a84535b42b947f1c2a113
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+%global commitdate 20260206
 
 Name:           niri-git
-Version:        25.08
-Release:        %autorelease -s git%{shortcommit0}
+Version:        25.11
+Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
-
 
 SourceLicense:        GPL-3.0-or-later
 License:              ((MIT OR Apache-2.0) AND BSD-3-Clause) AND ((MIT OR Apache-2.0) AND Unicode-3.0) AND (0BSD OR MIT OR Apache-2.0) AND (Apache-2.0) AND (Apache-2.0 AND MIT) AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 OR MIT OR Unlicense) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (BSD-2-Clause) AND (BSD-2-Clause OR Apache-2.0 OR MIT) AND (BSD-3-Clause OR MIT OR Apache-2.0) AND (GPL-3.0-or-later) AND (ISC) AND (MIT) AND (MIT OR Apache-2.0) AND (MIT OR Apache-2.0 OR LGPL-2.1-or-later) AND (MIT OR Apache-2.0 OR Zlib) AND (MIT OR Zlib OR Apache-2.0) AND (MPL-2.0) AND (Unicode-3.0) AND (Unlicense OR MIT) AND (Zlib) AND (Zlib OR Apache-2.0 OR MIT)
-URL:            https://github.com/YaLTeR/niri
+URL:            https://github.com/niri-wm/niri
 Source0:        %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 
 BuildRequires:  cargo-rpm-macros >= 25
@@ -34,6 +34,9 @@ BuildRequires:  mesa-libEGL
 
 Requires:       mesa-dri-drivers
 Requires:       mesa-libEGL
+
+# Loaded through dlopen
+Requires:       libwayland-server
 
 # Portal implementations used by niri
 Recommends:     xdg-desktop-portal-gtk
@@ -65,6 +68,10 @@ sed -i 's/\[env\]/[env]\nNIRI_BUILD_VERSION_STRING="%{version} (%{shortcommit0})
 %build
 %cargo_build
 
+target/rpm/niri completions bash > ./niri
+target/rpm/niri completions fish > ./niri.fish
+target/rpm/niri completions zsh > ./_niri
+
 %{cargo_license_summary}
 %{cargo_license} > LICENSE.dependencies
 %{cargo_vendor_manifest}
@@ -77,6 +84,10 @@ install -Dm644 -t %{buildroot}%{_datadir}/wayland-sessions ./resources/niri.desk
 install -Dm644 -t %{buildroot}%{_datadir}/xdg-desktop-portal ./resources/niri-portals.conf
 install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri.service
 install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri-shutdown.target
+
+install -Dm644 -t %{buildroot}%{bash_completions_dir} ./niri
+install -Dm644 -t %{buildroot}%{fish_completions_dir} ./niri.fish
+install -Dm644 -t %{buildroot}%{zsh_completions_dir} ./_niri
 
 %files
 %license LICENSE
@@ -92,6 +103,10 @@ install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri-shutdown.target
 %{_datadir}/xdg-desktop-portal/niri-portals.conf
 %{_userunitdir}/niri.service
 %{_userunitdir}/niri-shutdown.target
+
+%{bash_completions_dir}/niri
+%{fish_completions_dir}/niri.fish
+%{zsh_completions_dir}/_niri
 
 %changelog
 %autochangelog
