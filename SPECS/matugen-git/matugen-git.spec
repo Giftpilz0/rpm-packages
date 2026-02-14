@@ -1,6 +1,6 @@
-%global commit0 a28ec32ee12afc20ba7c9d9ec1943be81a779c96
+%global commit0 9ffc99628d09826263fbac36819abffe4d7a25aa
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260213
+%global commitdate 20260214
 
 Name:           matugen-git
 Version:        4.0.0
