@@ -1,6 +1,6 @@
-%global commit0 fddb4a09b107237819e661151e007b99b5cab36d
+%global commit0 865cf631d5bbb5f9fccc99b3f4cc80b9eeada18c
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20250630
+%global commitdate 20260305
 
 Name:           eww-git
 Version:        0.6.0
