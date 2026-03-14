@@ -1,8 +1,8 @@
 %bcond_with         asan
 
-%global commit0 706d6de7b0236cec2c25556e284b91104a4e834b
+%global commit0 4b77936c8019e0f51e0e62414c6de3556d5f8870
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260312
+%global commitdate 20260313
 %global tag         0.2.1
 
 Name:               quickshell-git
