@@ -3,7 +3,7 @@
 BASE="https://copr.fedorainfracloud.org/webhooks/custom/$COPR_WEBHOOK_ID/$COPR_WEBHOOK_UUID"
 
 declare -A BUILD_LEVELS=(
-    [1]="breakpad"
+    [1]="cpptrace"
     [2]="eww-git matugen-git niri-git quickshell-git waypipe-git yolk-git"
     [3]=""
     [4]=""

@@ -2,7 +2,7 @@
 
 # Package list in build order
 packages=(
-    "breakpad"
+    "cpptrace"
     "eww-git"
     "matugen-git"
     "niri-git"

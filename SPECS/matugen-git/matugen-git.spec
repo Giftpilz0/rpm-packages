@@ -1,3 +1,5 @@
+%global __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*\.rs$
+
 %global commit0 3a3fb9c710b1ad67df500dfd2ba5b12dea281d9d
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global commitdate 20260322

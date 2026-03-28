@@ -85,7 +85,7 @@ jobs:
       - name: Trigger all COPR builds
         run: |
           curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/breakpad/"
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/cpptrace/"
           curl -X POST \
             "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/eww-git/"
           curl -X POST \
@@ -104,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.update-packages.outputs.changed_packages != ''
     outputs:
-      breakpad: ${{ steps.changes.outputs.breakpad }}
+      cpptrace: ${{ steps.changes.outputs.cpptrace }}
       matugen-git: ${{ steps.changes.outputs.matugen-git }}
       niri-git: ${{ steps.changes.outputs.niri-git }}
       quickshell-git: ${{ steps.changes.outputs.quickshell-git }}
@@ -119,7 +119,7 @@ jobs:
         id: changes
         run: |
           CHANGED_LIST="${{ needs.update-packages.outputs.changed_packages }}"
-          echo "breakpad=false" >> $GITHUB_OUTPUT
+          echo "cpptrace=false" >> $GITHUB_OUTPUT
           echo "eww-git=false" >> $GITHUB_OUTPUT
           echo "matugen-git=false" >> $GITHUB_OUTPUT
           echo "niri-git=false" >> $GITHUB_OUTPUT
@@ -127,8 +127,8 @@ jobs:
           echo "waypipe-git=false" >> $GITHUB_OUTPUT
           echo "yolk-git=false" >> $GITHUB_OUTPUT
 
-          if [[ "$CHANGED_LIST" == *"breakpad"* ]]; then
-            echo "breakpad=true" >> $GITHUB_OUTPUT
+          if [[ "$CHANGED_LIST" == *"cpptrace"* ]]; then
+            echo "cpptrace=true" >> $GITHUB_OUTPUT
           fi
           if [[ "$CHANGED_LIST" == *"eww-git"* ]]; then
             echo "eww-git=true" >> $GITHUB_OUTPUT
@@ -149,15 +149,15 @@ jobs:
             echo "yolk-git=true" >> $GITHUB_OUTPUT
           fi
 
-  build-breakpad:
+  build-cpptrace:
     needs: detect-changes
-    if: needs.detect-changes.outputs.breakpad == 'true'
+    if: needs.detect-changes.outputs.cpptrace == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger breakpad COPR build
+      - name: Trigger cpptrace COPR build
         run: |
           curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/breakpad/"
+            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/cpptrace/"
 
   build-eww-git:
     needs: detect-changes

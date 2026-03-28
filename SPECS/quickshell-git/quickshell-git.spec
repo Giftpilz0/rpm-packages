@@ -16,17 +16,17 @@ Source0:            %{url}/archive/%{commit0}/quickshell-%{shortcommit0}.tar.gz
 
 Conflicts:          quickshell <= %{tag}
 
-BuildRequires:      breakpad-static
 BuildRequires:      cmake
+BuildRequires:      cpptrace-devel
 BuildRequires:      gcc-c++
 BuildRequires:      ninja-build
-BuildRequires:      pkgconfig(breakpad)
 BuildRequires:      pkgconfig(CLI11)
 BuildRequires:      pkgconfig(gbm)
 BuildRequires:      pkgconfig(glib-2.0)
 BuildRequires:      pkgconfig(jemalloc)
 BuildRequires:      pkgconfig(libdrm)
 BuildRequires:      pkgconfig(libpipewire-0.3)
+BuildRequires:      pkgconfig(libzstd)
 BuildRequires:      pkgconfig(pam)
 BuildRequires:      pkgconfig(polkit-agent-1)
 BuildRequires:      pkgconfig(Qt6Core)
