@@ -82,22 +82,14 @@ jobs:
     if: github.event.inputs.full_rebuild == 'true'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
       - name: Trigger all COPR builds
-        run: |
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/cpptrace/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/eww-git/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/matugen-git/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/niri-git/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/quickshell-git/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/waypipe-git/"
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/yolk-git/"
+        env:
+          COPR_WEBHOOK_ID: ${{ secrets.COPR_WEBHOOK_ID }}
+          COPR_WEBHOOK_UUID: ${{ secrets.COPR_WEBHOOK_UUID }}
+        run: ./buildall-copr.sh
 
   detect-changes:
     needs: update-packages

@@ -5,7 +5,7 @@
 Name:           yolk-git
 Version:        0.3.6
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
-Summary:        Yolk
+Summary:        Templated dotfile management tool
 
 License:        MIT
 URL:            https://github.com/elkowar/yolk

@@ -1,17 +1,17 @@
 Name:           cpptrace
 Version:        1.0.4
-Release:        4%{?dist}
+Release:        %autorelease
 Summary:        Simple, portable, and drop-in C++ stacktrace library
 
 License:        MIT
 URL:            https://github.com/jeremy-rifkin/cpptrace
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires:  cmake >= 3.14
+BuildRequires:  cmake
 BuildRequires:  gcc-c++
-BuildRequires:  ninja-build
 BuildRequires:  libdwarf-devel
 BuildRequires:  libunwind-devel
+BuildRequires:  ninja-build
 BuildRequires:  pkgconf
 
 %description
@@ -26,11 +26,13 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+%ldconfig_scriptlets
+
 %prep
 %autosetup -n %{name}-%{version}
 
 %build
-%cmake -GNinja -DBUILD_SHARED_LIBS=ON \
+%cmake -DBUILD_SHARED_LIBS=ON \
        -DCPPTRACE_USE_EXTERNAL_LIBDWARF=ON \
        -DCPPTRACE_FIND_LIBDWARF_WITH_PKGCONFIG=ON \
        -DCPPTRACE_GET_SYMBOLS_WITH_LIBDWARF=ON \
@@ -52,5 +54,4 @@ developing applications that use %{name}.
 %{_libdir}/cmake/cpptrace/
 
 %changelog
-* Mon Mar 02 2026 Avenge Media <AvengeMedia.US@gmail.com> - 1.0.4-1
-- Initial package for cpptrace
+%autochangelog

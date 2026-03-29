@@ -1,5 +1,3 @@
-%global __cargo_is_lib() 0
-
 %global commit0 8f48f56fe19918b5cfa02e5d68a47ebaf7bf3dee
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global commitdate 20260327
@@ -9,41 +7,34 @@ Version:        25.11
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
 
-SourceLicense:        GPL-3.0-or-later
-License:              ((MIT OR Apache-2.0) AND BSD-3-Clause) AND ((MIT OR Apache-2.0) AND Unicode-3.0) AND (0BSD OR MIT OR Apache-2.0) AND (Apache-2.0) AND (Apache-2.0 AND MIT) AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 OR MIT OR Unlicense) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (BSD-2-Clause) AND (BSD-2-Clause OR Apache-2.0 OR MIT) AND (BSD-3-Clause OR MIT OR Apache-2.0) AND (GPL-3.0-or-later) AND (ISC) AND (MIT) AND (MIT OR Apache-2.0) AND (MIT OR Apache-2.0 OR LGPL-2.1-or-later) AND (MIT OR Apache-2.0 OR Zlib) AND (MIT OR Zlib OR Apache-2.0) AND (MPL-2.0) AND (Unicode-3.0) AND (Unlicense OR MIT) AND (Zlib) AND (Zlib OR Apache-2.0 OR MIT)
+License:        ((MIT OR Apache-2.0) AND BSD-3-Clause) AND ((MIT OR Apache-2.0) AND Unicode-3.0) AND (0BSD OR MIT OR Apache-2.0) AND (Apache-2.0) AND (Apache-2.0 AND MIT) AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 OR MIT OR Unlicense) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (BSD-2-Clause) AND (BSD-2-Clause OR Apache-2.0 OR MIT) AND (BSD-3-Clause OR MIT OR Apache-2.0) AND (GPL-3.0-or-later) AND (ISC) AND (MIT) AND (MIT OR Apache-2.0) AND (MIT OR Apache-2.0 OR LGPL-2.1-or-later) AND (MIT OR Apache-2.0 OR Zlib) AND (MIT OR Zlib OR Apache-2.0) AND (MPL-2.0) AND (Unicode-3.0) AND (Unlicense OR MIT) AND (Zlib) AND (Zlib OR Apache-2.0 OR MIT)
 URL:            https://github.com/niri-wm/niri
-Source0:        %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+Source0:        %{url}/archive/%{commit0}/niri-%{shortcommit0}.tar.gz
 
-BuildRequires:  cargo-rpm-macros >= 25
-BuildRequires:  pkgconfig(udev)
+BuildRequires:  cargo-rpm-macros
+BuildRequires:  cairo-gobject-devel
+BuildRequires:  clang
+BuildRequires:  mesa-libEGL
+BuildRequires:  pango-devel
+BuildRequires:  pipewire-devel
+BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(gbm)
+BuildRequires:  pkgconfig(libdisplay-info)
+BuildRequires:  pkgconfig(libinput)
+BuildRequires:  pkgconfig(libseat)
+BuildRequires:  pkgconfig(systemd)
+BuildRequires:  pkgconfig(udev)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  wayland-devel
-BuildRequires:  pkgconfig(libinput)
-BuildRequires:  pkgconfig(dbus-1)
-BuildRequires:  pkgconfig(systemd)
-BuildRequires:  pkgconfig(libseat)
-BuildRequires:  pkgconfig(libdisplay-info)
-BuildRequires:  pipewire-devel
-BuildRequires:  pango-devel
-BuildRequires:  cairo-gobject-devel
-# Needed for pipewire-rs
-BuildRequires:  clang
-# Needed for some tests with a surfaceless EGL renderer
-BuildRequires:  mesa-libEGL
 
+Requires:       libwayland-server
 Requires:       mesa-dri-drivers
 Requires:       mesa-libEGL
 
-# Loaded through dlopen
-Requires:       libwayland-server
-
-# Portal implementations used by niri
-Recommends:     xdg-desktop-portal-gtk
-Recommends:     xdg-desktop-portal-gnome
 Recommends:     gnome-keyring
+Recommends:     xdg-desktop-portal-gnome
+Recommends:     xdg-desktop-portal-gtk
 
-# Obsoletes
 Obsoletes:      niri < %{version}-%{release}
 
 %description
@@ -56,13 +47,11 @@ Opening a new window never causes existing windows to resize.
 %autosetup -n niri-%{commit0}
 cargo vendor
 
-# We use vendored sources, but they still need a version rather than a git link in Cargo.toml
+# Replace upstream git dependencies so cargo can use the vendored sources.
 sed -i 's/^git = "https:\/\/github.com\/Smithay\/smithay.git"$/version = "*"/' Cargo.toml
 sed -i 's/git = "https:\/\/gitlab.freedesktop.org\/pipewire\/pipewire-rs.git"/version = "*"/' Cargo.toml
 
 %cargo_prep -v vendor
-
-# Set the build version string.
 sed -i 's/\[env\]/[env]\nNIRI_BUILD_VERSION_STRING="%{version} (%{shortcommit0})"/' .cargo/config.toml
 
 %build

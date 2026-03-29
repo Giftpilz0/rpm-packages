@@ -7,18 +7,18 @@
 Name:           matugen-git
 Version:        4.1.0
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
-Summary:        matugen
+Summary:        Material You color generation tool with templates
 
-License:        GPL-2.0-only
+License:        GPL-2.0-or-later
 URL:            https://github.com/InioX/matugen
-Source0:        %{url}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+Source0:        %{url}/archive/%{commit0}/matugen-%{shortcommit0}.tar.gz
 
 BuildRequires:  cargo-rpm-macros
 
 Obsoletes:      matugen < %{version}-%{release}
 
 %description
-A material you color generation tool with templates
+A Material You color generation tool with templates
 
 %prep
 %autosetup -n matugen-%{commit0}

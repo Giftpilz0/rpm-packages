@@ -5,37 +5,30 @@
 Name:           waypipe-git
 Version:        0.11.0
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
-Summary:        waypipe
+Summary:        Wayland application forwarding proxy
 
-License:        MIT
+License:        GPL-3.0-or-later
 URL:            https://gitlab.freedesktop.org/mstoeckl/waypipe
 Source0:        %{url}/-/archive/%{commit0}/waypipe-%{commit0}.tar.gz
 
-# Core build requirements
+BuildRequires:  bindgen
+BuildRequires:  cargo
+BuildRequires:  cargo-rpm-macros
+BuildRequires:  clang
+BuildRequires:  glslc
 BuildRequires:  meson
 BuildRequires:  ninja-build
-BuildRequires:  cargo
-BuildRequires:  rust
-BuildRequires:  pkgconfig
-BuildRequires:  clang
-BuildRequires:  bindgen
-
-# Documentation
-BuildRequires:  scdoc
-
-# Optional feature dependencies
-BuildRequires:  pkgconfig(liblz4)
-BuildRequires:  pkgconfig(libzstd)
-BuildRequires:  pkgconfig(vulkan)
 BuildRequires:  pkgconfig(gbm)
 BuildRequires:  pkgconfig(libavcodec)
 BuildRequires:  pkgconfig(libavutil)
-BuildRequires:  glslc
+BuildRequires:  pkgconfig(liblz4)
+BuildRequires:  pkgconfig(libzstd)
+BuildRequires:  pkgconfig(vulkan)
+BuildRequires:  rust
+BuildRequires:  scdoc
 
-# Runtime requirements
 Requires:       openssh
 
-# Obsoletes
 Obsoletes:      waypipe < %{version}-%{release}
 
 %description
@@ -45,16 +38,18 @@ application forwarding similar to "ssh -X" feasible.
 
 %prep
 %autosetup -n waypipe-%{commit0}
-
-# Fetch Rust dependencies
-cargo fetch --locked
+cargo vendor
+%cargo_prep -v vendor
 
 %build
 %meson \
-    -Dwith_lz4=enabled \
-    -Dwith_zstd=enabled \
+    -Dman-pages=enabled \
+    -Dtests=false \
     -Dwith_dmabuf=enabled \
-    -Dwith_video=enabled
+    -Dwith_gbm=enabled \
+    -Dwith_lz4=enabled \
+    -Dwith_video=enabled \
+    -Dwith_zstd=enabled
 
 %meson_build
 
