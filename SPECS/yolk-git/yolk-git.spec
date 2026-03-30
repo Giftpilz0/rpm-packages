@@ -1,6 +1,6 @@
-%global commit0 b4046140b4253934568bf0289673ec5efeb2a5c9
+%global commit0 f3abb5b32a097193c72ab509cee39dc3ea304419
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20251112
+%global commitdate 20260329
 
 Name:           yolk-git
 Version:        0.3.6
