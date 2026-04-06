@@ -1,6 +1,6 @@
-%global commit0 8f48f56fe19918b5cfa02e5d68a47ebaf7bf3dee
+%global commit0 d1a0380eed224363749f1704ca3ff2ab1690b7f2
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260327
+%global commitdate 20260405
 
 Name:           niri-git
 Version:        25.11
