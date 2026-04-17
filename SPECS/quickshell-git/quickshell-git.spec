@@ -1,6 +1,6 @@
-%global commit0 d4c92973b53d9fa34cc110d3b974eb6bde5b3027
+%global commit0 fb08eced449e87e47321e95beeb890a63d2c67bd
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260409
+%global commitdate 20260413
 
 Name:           quickshell-git
 Version:        0.2.1
