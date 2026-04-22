@@ -1,6 +1,32 @@
-%global commit0 e472b5b0f13d91fdf0e5d07551f68177d25043d0
+%global commit0 efb169416d72e63179759e9158a335cbb3d5b48f
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 %global commitdate 20260421
+
+%bcond_without check
+
+%global cargo_install_lib 0
+
+# We want panic backtraces to work without installing the debuginfo package,
+# so we leave the debuginfo in the main binary.
+%global debug_package %{nil}
+%global __strip /bin/true
+
+# To reduce the file size, do some convincing of rust-srpm-macros
+# to leave alone the chosen debug settings from Cargo.toml.
+%global rustflags_debuginfo please-remove-me
+%global build_rustflags %{shrink:
+  -Copt-level=%rustflags_opt_level
+  -Ccodegen-units=%rustflags_codegen_units
+  -Cstrip=none
+  %{expr:0%{?_include_frame_pointers} && ("%{_arch}" != "ppc64le" && "%{_arch}" != "s390x" && "%{_arch}" != "i386") ? "-Cforce-frame-pointers=yes" : ""}
+  -Clink-arg=-Wl,-z,relro
+  -Clink-arg=-Wl,-z,now
+  %[0%{?_package_note_status} ? "-Clink-arg=%_package_note_flags" : ""]
+  --cap-lints=warn
+}
+
+# Convince rust-srpm-macros to use Cargo.lock with the Smithay commit.
+%global __cargo_common_opts %{?_smp_mflags} -Z avoid-dev-deps --locked
 
 Name:           niri-git
 Version:        25.11
@@ -45,13 +71,16 @@ Opening a new window never causes existing windows to resize.
 
 %prep
 %autosetup -n niri-%{commit0}
-cargo vendor
 
-# Replace upstream git dependencies so cargo can use the vendored sources.
-sed -i 's/^git = "https:\/\/github.com\/Smithay\/smithay.git"$/version = "*"/' Cargo.toml
-sed -i 's/git = "https:\/\/gitlab.freedesktop.org\/pipewire\/pipewire-rs.git"/version = "*"/' Cargo.toml
+%cargo_prep -N
 
-%cargo_prep -v vendor
+# We're doing an online build.
+sed -i 's/^offline = true$//' .cargo/config.toml
+
+# Final step in leaving alone our debug settings.
+sed -i 's/.*please-remove-me$//' .cargo/config.toml
+
+# Set the version string.
 sed -i 's/\[env\]/[env]\nNIRI_BUILD_VERSION_STRING="%{version} (%{shortcommit0})"/' .cargo/config.toml
 
 %build
@@ -60,10 +89,6 @@ sed -i 's/\[env\]/[env]\nNIRI_BUILD_VERSION_STRING="%{version} (%{shortcommit0})
 target/rpm/niri completions bash > ./niri
 target/rpm/niri completions fish > ./niri.fish
 target/rpm/niri completions zsh > ./_niri
-
-%{cargo_license_summary}
-%{cargo_license} > LICENSE.dependencies
-%{cargo_vendor_manifest}
 
 %install
 %cargo_install
@@ -78,10 +103,13 @@ install -Dm644 -t %{buildroot}%{bash_completions_dir} ./niri
 install -Dm644 -t %{buildroot}%{fish_completions_dir} ./niri.fish
 install -Dm644 -t %{buildroot}%{zsh_completions_dir} ./_niri
 
+%if %{with check}
+%check
+%cargo_test -- --workspace --exclude niri-visual-tests
+%endif
+
 %files
 %license LICENSE
-%license LICENSE.dependencies
-%license cargo-vendor.txt
 %doc README.md
 %doc resources/default-config.kdl
 %doc docs/wiki
