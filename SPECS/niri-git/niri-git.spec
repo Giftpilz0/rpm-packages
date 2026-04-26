@@ -1,6 +1,6 @@
-%global commit0 9438f59e2b9d8deb6fcec5922f8aca18162b673c
+%global commit0 8ed0da44d974c32c6877d2f4630c314da0717ecb
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260424
+%global commitdate 20260425
 
 %bcond_without check
 
@@ -29,7 +29,7 @@
 %global __cargo_common_opts %{?_smp_mflags} -Z avoid-dev-deps --locked
 
 Name:           niri-git
-Version:        25.11
+Version:        26.04
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Scrollable-tiling Wayland compositor
 
