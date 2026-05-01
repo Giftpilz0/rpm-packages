@@ -96,13 +96,9 @@ jobs:
     runs-on: ubuntu-latest
     if: needs.update-packages.outputs.changed_packages != ''
     outputs:
-      cpptrace: ${{ steps.changes.outputs.cpptrace }}
       matugen-git: ${{ steps.changes.outputs.matugen-git }}
       niri-git: ${{ steps.changes.outputs.niri-git }}
-      quickshell-git: ${{ steps.changes.outputs.quickshell-git }}
       waypipe-git: ${{ steps.changes.outputs.waypipe-git }}
-      yolk-git: ${{ steps.changes.outputs.yolk-git }}
-      eww-git: ${{ steps.changes.outputs.eww-git }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -111,55 +107,19 @@ jobs:
         id: changes
         run: |
           CHANGED_LIST="${{ needs.update-packages.outputs.changed_packages }}"
-          echo "cpptrace=false" >> $GITHUB_OUTPUT
-          echo "eww-git=false" >> $GITHUB_OUTPUT
           echo "matugen-git=false" >> $GITHUB_OUTPUT
           echo "niri-git=false" >> $GITHUB_OUTPUT
-          echo "quickshell-git=false" >> $GITHUB_OUTPUT
           echo "waypipe-git=false" >> $GITHUB_OUTPUT
-          echo "yolk-git=false" >> $GITHUB_OUTPUT
 
-          if [[ "$CHANGED_LIST" == *"cpptrace"* ]]; then
-            echo "cpptrace=true" >> $GITHUB_OUTPUT
-          fi
-          if [[ "$CHANGED_LIST" == *"eww-git"* ]]; then
-            echo "eww-git=true" >> $GITHUB_OUTPUT
-          fi
           if [[ "$CHANGED_LIST" == *"matugen-git"* ]]; then
             echo "matugen-git=true" >> $GITHUB_OUTPUT
           fi
           if [[ "$CHANGED_LIST" == *"niri-git"* ]]; then
             echo "niri-git=true" >> $GITHUB_OUTPUT
           fi
-          if [[ "$CHANGED_LIST" == *"quickshell-git"* ]]; then
-            echo "quickshell-git=true" >> $GITHUB_OUTPUT
-          fi
           if [[ "$CHANGED_LIST" == *"waypipe-git"* ]]; then
             echo "waypipe-git=true" >> $GITHUB_OUTPUT
           fi
-          if [[ "$CHANGED_LIST" == *"yolk-git"* ]]; then
-            echo "yolk-git=true" >> $GITHUB_OUTPUT
-          fi
-
-  build-cpptrace:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.cpptrace == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger cpptrace COPR build
-        run: |
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/cpptrace/"
-
-  build-eww-git:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.eww-git == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger eww-git COPR build
-        run: |
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/eww-git/"
 
   build-matugen-git:
     needs: detect-changes
@@ -181,16 +141,6 @@ jobs:
           curl -X POST \
             "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/niri-git/"
 
-  build-quickshell-git:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.quickshell-git == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger quickshell-git COPR build
-        run: |
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/quickshell-git/"
-
   build-waypipe-git:
     needs: detect-changes
     if: needs.detect-changes.outputs.waypipe-git == 'true'
@@ -200,13 +150,3 @@ jobs:
         run: |
           curl -X POST \
             "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/waypipe-git/"
-
-  build-yolk-git:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.yolk-git == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger yolk-git COPR build
-        run: |
-          curl -X POST \
-            "https://copr.fedorainfracloud.org/webhooks/custom/${{ secrets.COPR_WEBHOOK_ID }}/${{ secrets.COPR_WEBHOOK_UUID }}/yolk-git/"

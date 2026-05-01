@@ -2,13 +2,9 @@
 
 # Package list in build order
 packages=(
-    "cpptrace"
-    "eww-git"
     "matugen-git"
     "niri-git"
-    "quickshell-git"
     "waypipe-git"
-    "yolk-git"
 )
 
 # Required host tools

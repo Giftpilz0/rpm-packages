@@ -5,13 +5,9 @@ set -euo pipefail
 # - platform: github | gitlab
 # - package_type: release | git
 packages=(
-  "cpptrace github jeremy-rifkin/cpptrace SPECS/cpptrace/cpptrace.spec release"
-  "eww-git github elkowar/eww SPECS/eww-git/eww-git.spec git"
   "matugen-git github InioX/matugen SPECS/matugen-git/matugen-git.spec git"
   "niri-git github niri-wm/niri SPECS/niri-git/niri-git.spec git"
-  "quickshell-git github quickshell-mirror/quickshell SPECS/quickshell-git/quickshell-git.spec git"
   "waypipe-git gitlab mstoeckl%2Fwaypipe SPECS/waypipe-git/waypipe-git.spec git"
-  "yolk-git github elkowar/yolk SPECS/yolk-git/yolk-git.spec git"
 )
 
 echo -e "\n======================================="
