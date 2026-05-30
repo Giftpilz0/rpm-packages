@@ -1,8 +1,8 @@
 %global __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*\.rs$
 
-%global commit0 811498879e927a5cce87ee72aae0dacaaba0a880
+%global commit0 74bfe9369a46589c5048072142796343a8d74168
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260515
+%global commitdate 20260529
 
 Name:           matugen-git
 Version:        4.1.0
