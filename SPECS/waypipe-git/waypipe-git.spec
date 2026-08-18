@@ -1,9 +1,9 @@
-%global commit0 c86a2034d8c87252571bb98a0c1e24da24786650
+%global commit0 dcedd03779982d5b5524b48d7a16602c0f497d76
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260813
+%global commitdate 20260816
 
 Name:           waypipe-git
-Version:        0.11.0
+Version:        0.11.1
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Wayland application forwarding proxy
 

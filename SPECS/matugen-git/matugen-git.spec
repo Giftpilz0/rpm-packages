@@ -1,11 +1,11 @@
 %global __brp_mangle_shebangs_exclude_from ^/usr/src/debug/.*\.rs$
 
-%global commit0 133e410751c7c484a9fdddc299851d4494e59871
+%global commit0 5451d412db98c567b4bed8d149515aba6a14c59a
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260805
+%global commitdate 20260817
 
 Name:           matugen-git
-Version:        4.1.0
+Version:        4.2.0
 Release:        %autorelease -s %{commitdate}git%{shortcommit0}
 Summary:        Material You color generation tool with templates
 
