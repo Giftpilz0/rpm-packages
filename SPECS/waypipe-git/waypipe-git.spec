@@ -1,6 +1,6 @@
-%global commit0 a1ffdd8d0f44cbdb25a3edd1c6adc0a30cfcf754
+%global commit0 6cccb84b74f2e9e5e88a77d004a58c7a87f5b97e
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-%global commitdate 20260825
+%global commitdate 20260926
 
 Name:           waypipe-git
 Version:        0.11.2
