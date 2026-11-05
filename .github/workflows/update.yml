@@ -30,7 +30,7 @@ jobs:
       changed_packages: ${{ steps.changes.outputs.changed_packages }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -83,7 +83,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Trigger all COPR builds
         env:
@@ -101,7 +101,7 @@ jobs:
       waypipe-git: ${{ steps.changes.outputs.waypipe-git }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Parse changed packages
         id: changes
